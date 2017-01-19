@@ -1,0 +1,114 @@
+/* 通用的样式 */
+[v-cloak]{display: none;}
+.clearfix{overflow: hidden;clear: both;}
+.body{background: url("../image/bg.png");}
+/* 列表类 */
+.ul{list-style: none;padding: 0;margin: 0;}
+.ul-col{list-style: none;padding: 0;margin: 0;width: 100%;text-align: center;}
+.ul-col li{box-sizing: border-box;display: inline-block;}
+  /* 两列 */
+  .ul-col-2 li{width: 50%;}
+  /* 三列 */
+  .ul-col-3 li{width: 33%;}
+  /* 四列 */
+  .ul-col-4 li{width: 25%}
+/* 文字类 */
+.black{color: #000;}
+.white{color: #fff;}
+.hr hr{border-top: 1px solid #ccc !important}
+.text-center{text-align: center;}
+.text-left{text-align: left;}
+.text-right{text-align: right;}
+.noresize{resize: none;}
+.nowrap{white-space: nowrap;}
+.a{text-decoration: none !important;}
+.cursor{cursor: pointer;}
+.indent5 {text-indent: 5px}
+.indent10 {text-indent: 10px}
+.indent-p p{margin-left: 16px}
+.blackbg{background-color: #000;}
+.whitebg{background-color: #fff;}
+.font-size-12{font-size: 12px}
+.font-size-14{font-size: 14px}
+.font-size-16{font-size: 16px}
+.font-size-18{font-size: 18px}
+.font-size-20{font-size: 20px}
+.line-height-26{line-height: 26px}
+/* 布局类 */
+.size80{width: 80px;height: 80px}
+.size60{width: 60px;height: 60px}
+.size40{width: 40px;height: 40px}
+.left{float: left;}
+.right{float: right;}
+.pleft{left: 0;}
+.pright{right: 0;}
+.ptop{top: 0;}
+.opacity0{opacity: 0}
+.zindex1{z-index: 1;}
+.pbottom{bottom: 0;}
+.block{display: block;}
+.inline{display: inline;}
+.absolute{position: absolute;}
+.relative{position: relative;}
+.none{display: none !important;}
+.verticle-b{vertical-align: bottom;}
+.verticle-m{vertical-align: middle;}
+.verticle-t{vertical-align: top;}
+.inlineblock{display: inline-block;}
+.margin-center{margin: auto;}
+.margin-10{margin: 10px;}
+.margin-16{margin: 16px;}
+.margin-top-10{margin-top: 10px;}
+.margin-top-16{margin-top: 16px;}
+.margin-left-10{margin-left: 10px;}
+.margin-left-16{margin-left: 16px;}
+.margin-right-10{margin-right: 10px;}
+.margin-right-16{margin-right: 16px;}
+.margin-bottom-10{margin-bottom: 10px;}
+.margin-bottom-16{margin-bottom: 16px;}
+.padding-none{padding: 0!important;}
+.padding-10{padding: 10px;}
+.padding-16{padding: 16px;}
+.padding-top-10{padding-top: 10px;}
+.padding-top-16{padding-top: 16px;}
+.padding-left-10{padding-left: 10px;}
+.padding-left-16{padding-left: 16px;}
+.padding-right-10{padding-right: 10px;}
+.padding-right-16{padding-right: 16px;}
+.padding-bottom-10{padding-bottom: 10px;}
+.padding-bottom-16{padding-bottom: 16px;}
+/* 边框类 */
+.no-outline{outline: none;}
+.no-border{border-width:0;}
+.circle{border-radius: 50%;overflow: hidden;}
+.border-radius-5{border-radius: 5px;}
+.border-radius-10{border-radius: 10px;}
+.border-radius-15{border-radius: 15px;}
+.border-top{border-top: 1px solid #e5e5e5}
+.border-left{border-left: 1px solid #e5e5e5}
+.border-right{border-right: 1px solid #e5e5e5}
+.border-bottom{border-bottom: 1px solid #e5e5e5}
+/* 首页 */
+.index-panel {border-left: none;}
+.index-panel .panel-heading{border-left:1px solid #e5e5e5;}
+.articul-index li{border-left: 1px solid #e5e5e5 !important;}
+.articul-index li:hover{background: rgba(229,229,229,0.2);border-left-color: #000 !important}
+.artic-item{max-height: 280px;overflow: hidden;}
+._active{background-color: #f5f5f5;}
+.banner{background: url(../image/banner-bg.jpg) center center no-repeat;background-size: 100%}
+.bannerpadding{padding: 60px}
+@media screen and (max-width: 750px){
+	.bannerpadding{padding: 20px}
+}
+@media screen and (max-width: 400px){
+	.bannerpadding{padding: 5px}
+}
+/* 文章列表 */
+.articul-list li:hover{border-left: 1px solid #000}
+.listbg{background: #eee}
+/* 文章详情 */
+.artic-body table{width: 100% !important}
+.minwidth{min-height: 60px}
+/* 关于 */
+/* 发表 */
+.note-editable table{width: 100% !important}

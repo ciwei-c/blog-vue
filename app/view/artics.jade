@@ -1,0 +1,37 @@
+extends ../common/layout/layout
+
+block content
+  .container
+    .row
+      .col-md-9.visible-xs-block
+        .panel.panel-primary.cursor.text-center.classifycollapse(data-target="#navtab" data-toggle="collapse" @click="onClassifyClick" v-cloak)
+          .panel-heading
+            span.a.fa.black(v-bind:class="classObject")  {{label}}
+    .row
+      .col-md-9
+        .navbar-collapse.collapse#navtab
+          .nav.nav-tabs.nav-justified.navtab.margin-bottom-16(v-cloak)
+            li(v-for="(item,index) in listItems" @click="onNavClick" v-bind:class="{active:item.isActive}")
+              a(v-bind:href="href" v-bind:tabindex="index") {{item.type}}
+                span.badge.margin-left-10 {{item.count}}
+      .col-md-1.col-md-offset-1
+          a.block.hidden-sm.hidden-xs(href="about")
+            img.img-thumbnail.img-responsive(src="public/image/c.png")
+    .row
+      .col-md-9 
+        .panel
+          .panel-body
+            ul.list-group.articul-list.margin-top-16(v-cloak)
+              li.clearfix.padding-bottom-10.border-radius-5(v-if="listItems" v-for="(item,index) in listItems" v-bind:class="{'listbg':item.isOdd}")
+                .padding-left-10.padding-right-10
+                  a(v-bind:href="'artic?'+item._id") {{item.title}}
+                  .right
+                    span.fa.fa-user-o.margin-right-16  ciwei_c
+                    span.fa.fa-clock-o  {{item.creatAt}}
+              li.padding-16(v-else) 该分类未发表文章
+          .text-center
+            ul.pagination.margin-center.artics-page-ul(v-cloak)
+              li(v-if="listItems" v-for="(item,index) in listItems" v-bind:class="{active:item.isActive}" @click="onPageClick")
+                a(v-bind:href="href" v-bind:page="index+1") {{index+1}}
+  script(src="public/js/artics.js")
+      

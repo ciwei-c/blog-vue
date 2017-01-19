@@ -1,0 +1,81 @@
+extends ../common/layout/layout
+
+block content
+  .container
+    .row
+      ul.nav.nav-pills
+        li.active
+          a(data-toggle="tab" href="#artic") 文章
+        li
+          a(data-toggle="tab" href="#mood") 心情
+      .tab-content
+        .tab-pane.fade-in.active#artic
+          .panel.panel-default
+            .panel-body
+              form
+                input.form-control.artic-title.margin-bottom-10(placeholder="请输入文章标题" type="text")
+                .summernote
+                .margin-top-10
+                  .inlineblock.dropdown
+                    a.btn.btn-primary.typechoose(data-toggle="dropdown") 分类
+                      span.caret
+                    ul.dropdown-menu.dropdown-menu-left
+                      li
+                        a(data-type="1") 随笔
+                      li
+                        a(data-type="2") html
+                      li
+                        a(data-type="3") js
+                      li
+                        a(data-type="4") node
+                      li
+                        a(data-type="5") mongodb
+                  a.btn.btn-primary.articbtn.margin-left-10 发表
+                  a.btn.btn-primary.articupdate.margin-left-10.none 修改
+                  a.btn.btn-primary.margin-left-10.cancel 取消
+                  a.btn.btn-primary.margin-left-10.myartic(href="#articlistmodal" data-toggle="modal" data-backdrop="static") 查看文章
+              .alert.alert-warning.margin-top-16.none 内容或标题不能为空
+        .tab-pane.fade-in#mood
+          .panel.panel-default
+            .panel-body
+              form
+                textarea.form-control.noresize.mood-content(rows='5' placeholder="请输入你想说的话")
+                .margin-top-10
+                  a.btn.btn-primary.moodbtn 发表
+                  a.btn.btn-primary.margin-left-10.cancel 取消
+                  a.btn.btn-primary.margin-left-10.history(href="#histroymodal" data-toggle="modal" data-backdrop="static") 查看历史
+  .modal.fade#histroymodal
+    .modal-dialog
+      .modal-content
+        .modal-header
+          h4.modal-title 历史心情
+            span.close(data-dismiss="modal") &times
+        .modal-body
+          ul.ul.historyul.clearfix
+          .text-center
+            ul.pagination.margin-center.moods_page_ul
+  .modal.fade#articlistmodal
+    .modal-dialog
+      .modal-content
+        .modal-header
+          h4.modal-title 我的文章
+            span.close(data-dismiss="modal") &times
+        .modal-body
+          ul.ul.articul.clearfix
+          .text-center
+            ul.pagination.margin-center.artics_page_ul
+  .modal.fade#passmodal
+    .modal-dialog
+      .modal-content
+        .modal-header
+          h4.modal-title 权限
+        .modal-body
+          form(onsubmit="return false")
+            input.form-control.passvalue(type="password" placeholder="请输入权限验证")
+            .margin-top-16
+              a.btn.btn-primary.passconfirm 确定
+              a.btn.btn-primary.margin-left-16.passcancel 取消
+          .alert.alert-warning.margin-top-16.none.passalert 错误或不能为空，请重新输入
+  script(src="bower/summernote/summernote.js")
+  script(src="bower/summernote/summernote-zh-CN.js")
+  script(src="public/js/publish.js")

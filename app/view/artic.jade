@@ -1,0 +1,117 @@
+extends ../common/layout/layout
+
+block content
+  .container
+    .row
+      .col-md-10.hr.col-md-offset-1
+        hr
+    .row
+      .col-md-10.col-md-offset-1
+        .panel.panel-default
+          .panel-body
+            .artic-wrap(v-cloak)
+              .artic-header
+                h3 {{item.title}}
+                  .right.font-size-14.line-height-26
+                    span.fa.fa-user-o.margin-right-16 {{item.author}}
+                    span.fa.fa-clock-o  {{item.creatAt}}
+                hr
+                .artic-body(v-html="item.content")
+                hr
+                .artic-footer.padding-left-16.padding-right-16
+                  ul.pager.pre-next-ul
+                    li.previous(v-if="prevnext.prev")
+                      a.btn.btn-default(v-bind:href="'artic?'+prevnext.prev") 上一篇
+                    span.left(v-else) 当前已经是第一篇
+                    li.next(v-if="prevnext.next")
+                      a.btn.btn-default(v-bind:href="'artic?'+prevnext.next") 下一篇
+                    span.right(v-else) 当前已经是最后一篇
+
+    .row
+      .col-md-10.col-md-offset-1
+        .panel.panel-info.comment-wrap(v-cloak)
+          .panel-heading
+            h4.panel-title 全部评论
+              span ({{count}})
+          .panel-body
+            ul.ul
+              li.clearfix.margin-bottom-16(v-if="listItems" v-for="item in listItems" v-bind:commentid="item._id")
+                hr
+                .text-center.inlineblock.col-md-2.col-sm-2
+                  img.size60.img-responsive.img-thumbnail(v-bind:src="item.fromUser.logo")
+                  .font-size-12 {{item.fromUser.nickName}}
+                .col-md-10.col-sm-10
+                  .clearfix
+                    p.minwidth(v-html="item.content")
+                    .right
+                      span {{item.floorIndex}}楼 |
+                      span  {{item.creatAt}} |
+                      a.a(v-bind:toUser="item.fromUser._id" v-bind:href="href" @click="onReply")  回复({{item.reply.length}})
+                  ul.ul.clearfix(v-if="item.reply.length")
+                    li.clearfix(v-for="_item in item.reply")
+                      hr
+                      .left
+                        img.size40.hidden-xs.img-responsive.img-thumbnail(v-bind:src="_item.fromUser.logo")
+                      .col-md-10.col-sm-10
+                        div
+                          span {{_item.fromUser.nickName}} 回复 {{_item.toUser.nickName}} : 
+                          span(v-html="_item.content")
+                        .right
+                          span {{_item.creatAt}} | 
+                          a.a(v-bind:href="href" v-bind:toUser="_item._id" @click="onReply") 回复
+              .padding-16(v-else) 暂未有评论
+            .text-center
+              ul.pagination.comment-page-ul
+    .row
+      .col-md-10.col-md-offset-1
+        .panel.panel-info
+          .panel-heading
+            h4.panel-title 发表评论
+          .panel-body
+            form
+              .row.send-commont-wrap
+                if user
+                  .text-center.inlineblock.col-md-2.col-sm-2.col-xs-3
+                    img.img-responsive.img-thumbnail(src="#{user.logo}")
+                    .user-info.font-size-12(userId="#{user._id}") #{user.nickName}
+                    div
+                      a.nowrap.font-size-12.a.user-logout(href="javascript:") 注销
+                  .col-md-10.col-sm-10.col-xs-9
+                    textarea.form-control.noresize.comment-text.margin-bottom-16(placeholder="快发表你的见解吧" rows=5)
+                    a.btn.btn-primary.comment 发表
+                    .alert.alert-danger.margin-top-16.none.comment-alert 不能为空
+                else
+                  ul.nav.nav-tabs.margin-left-16
+                    li.active
+                     a(data-toggle="tab" href="#login") 已登陆过
+                    li
+                     a(data-toggle="tab" href="#register") 未登陆过
+                  .tab-content.padding-top-16
+                    .tab-pane.fade-in.active#login
+                      .col-md-6.col-sm-6.login-wrap
+                        .form-group.login-email
+                          .input-group
+                            .input-group-addon
+                              span.fa.fa-envelope
+                            input.form-control.user-login-email(placeholder="请输入邮箱")
+                        a.btn.btn-primary.user-login 确定
+                        .alert.alert-danger.margin-top-16.none.login-email-alert
+                    .tab-pane.fade-in#register
+                      .col-md-6.col-sm-6.login-wrap
+                        .form-group.register-logo.relative
+                          img.size80.img-thumbnail.user-logo(src="public/image/user.jpg")
+                          input.absolute.pleft.ptop.opacity0.size80.user-head-picker(type="file" name="user-logo")
+                        .form-group.register-nickname
+                          .input-group
+                            .input-group-addon
+                              span.fa.fa-user-circle-o
+                            input.form-control.user-nickname(placeholder="起个昵称吧")
+                        .form-group.register-email
+                          .input-group
+                            .input-group-addon
+                              span.fa.fa-envelope
+                            input.form-control.user-email(placeholder="请输入邮箱")
+                        a.btn.btn-primary.user-register 确定
+                        .alert.alert-danger.margin-top-16.none.nickname-alert
+                        .alert.alert-danger.margin-top-16.none.email-alert
+  script(src="public/js/artic.js")

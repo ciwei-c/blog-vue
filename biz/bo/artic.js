@@ -1,0 +1,172 @@
+var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
+var modelName = "artic";
+
+var articSchema = new Schema({
+	content:String,
+	title:String,
+	type:String,
+	author:{type:String,default:"ciwei_c"},
+	creatAt:{type:Date,default:Date.now()}
+})
+
+articSchema.statics.publish_artic = function(callback,params){
+	if(!params.artic_content){
+		callback("no content");
+		return;
+	}
+	if(!params.artic_type){
+		callback("no type");
+		return;
+	}
+	if(!params.artic_title){
+		callback("no title");
+		return;
+	}
+	var _artic = new artic({
+		content:params.artic_content,
+		title:params.artic_title,
+		type:params.artic_type,
+		creatAt:Date.now()
+	})
+	_artic.save(function(err,res){
+		var data = {};
+		if(err){
+			console.log(err)
+			callback(err);
+			return;
+		}
+		callback(null);
+	})
+};
+articSchema.statics.update_artic = function(callback,params){
+	if(!params.artic_content){
+		callback("no content");
+		return;
+	}
+	if(!params.artic_type){
+		callback("no type");
+		return;
+	}
+	if(!params.artic_title){
+		callback("no title");
+		return;
+	}
+	this.findByIdAndUpdate(params._id,{$set:{
+		content:params.artic_content,
+		title:params.artic_title,
+		type:params.artic_type
+	}},function(err){
+		var data = {};
+		if(err){
+			console.log(err)
+			callback(err);
+			return;
+		}
+		callback(null);
+	})
+};
+articSchema.statics.load_by_id = function(callback,params){
+	var _id = params._id;
+	var _this = this;
+	this.findOne({_id:_id},function(err,artic){
+		if(err){
+			console.log(err);
+			callback(err);
+			return;
+		}
+		if(params.prevnext){
+			_this.find({},function(err,artics){
+				var prevNextArtic = {};
+				var nowIndex = "";
+				for(var i = 0;i < artics.length ; i ++){
+					if(artics[i]._id == _id){
+						nowIndex = i;
+					}
+				}
+			if(artics.length>1){
+				if(nowIndex == 0){
+					prevNextArtic.prev = artics[nowIndex+1]._id;
+				}else if(nowIndex == artics.length-1){
+					prevNextArtic.next = artics[nowIndex-1]._id;
+				}else{
+					prevNextArtic.next = artics[nowIndex-1]._id;
+					prevNextArtic.prev = artics[nowIndex+1]._id;
+				}
+			}
+				var data = {};
+				data.artic = artic;
+				data.prevNextArtic = prevNextArtic;
+				callback(null,data)
+			})
+		}else{
+			callback(null,artic);
+		}
+	})
+};
+articSchema.statics.get_page_count = function(callback,params){
+	var result = (params.artic_type?this.find({type:params.artic_type}):this.find({}));
+	result.exec(function(err,data){
+		if(err){
+			callback(err);
+			return;
+		}
+		callback(null,{count:data.length});
+	})
+};
+articSchema.statics.get_type_count = function(callback,params){
+	var type = {};
+	type.all = 0;
+	this.find({},function(err,artics){
+		artics.forEach(function(artic){
+			if(!type["tp"+artic.type]){
+				type["tp"+artic.type] = 0;
+			}
+			type["tp"+artic.type] ++;
+			type.all ++;
+		})
+		callback(null,type);
+	})
+};
+articSchema.statics.load_artics = function(callback,params){
+	var result = (params.artic_type?this.find({type:params.artic_type}):this.find({}));
+	var skipNum;
+	if(params.page&&params.limitNum){
+		var limitNum = Number(params.limitNum)
+		skipNum = params.page == 1?0:(params.page-1)*limitNum;
+		result = result.skip(skipNum).limit(limitNum);
+	}
+	//加载分类
+	result = (params.limit?result.limit(Number(params.limit)):result);
+	result.sort({creatAt:-1}).exec(function(err,artics){
+		if(err){
+			console.log(err);
+			callback(err);
+			return;
+		}
+		callback(null,artics);
+	})
+};
+articSchema.statics.remove_artic = function(callback,params){
+	if(!params._id){
+		callback("no id");
+		return;
+	}
+	var _id = params._id;
+	this.find({_id:_id},function(err,data){
+		if(data&&data[0]){
+			if(err){
+				console.log(err);
+				callback(err);
+				return;
+			}
+			data[0].remove({_id:_id});
+			callback(null);
+		}else{
+			callback("该数据已删除");
+		}
+	})
+};
+var artic = mongoose.model(modelName,articSchema);
+exports.model = artic;
+exports.modelName = modelName;

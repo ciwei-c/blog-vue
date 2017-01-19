@@ -1,2 +1,7 @@
-# blog-vue.js-
-打算使用vue.js重构
+# blog-vue
+   使用vue.js
+   	   jquery
+   	   jade
+       bootstrap
+       mongodb
+       node

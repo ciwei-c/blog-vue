@@ -1,0 +1,22 @@
+nav.navbar.navbar-default.navbar-fix-top
+    .container
+      .navbar-header
+        button.navbar-toggle.margin-top-16(type="button" data-toggle="collapse" data-target="#menu")
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href="/") 个人博客
+        span.navbar-brand.font-size-14.motto 纸上得来终觉浅，绝知此事要躬行。
+      .collapse.navbar-collapse#menu
+        ul.nav.navbar-nav.navbar-right
+          li
+            a.fa.fa-home(href="/")  首页
+          li
+            a.fa.fa-tag(href="artics")  博文
+          li
+            a.fa.fa-angle-double-down(href="about")  关于
+          if user
+            if user.email == 'ciwei_c@163.com'
+              li
+                a.fa.fa-pencil(href="publish")  发表
+          else

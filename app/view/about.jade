@@ -1,0 +1,68 @@
+extends ../common/layout/layout
+
+block content
+  .mainbody
+    .container.about
+      .row
+        .col-md-8
+          .panel.panel-default
+            .panel-heading
+              h3.panel-title 关于
+            .panel-body.indent-p
+              div.clearfix
+                h4 简介
+                .col-md-6.col-sm-6.col-xs-6
+                  p boopstrap搭建前端框架
+                  p jquery作为javascript库
+                  p jade作为模板引擎
+                  p nodejs及express搭建服务器端
+                  p mongodb及mongoose搭建后台
+                .col-md-6.col-sm-6.col-xs-6
+                  img.margin-left-10.img-thumbnail.img-responsive(src="public/image/frame.png")
+              div
+                hr
+                h4 博客初衷
+                p 兴趣使然，是别人了解你的直接方式
+              div
+                hr
+                h4 联系方式
+                p Email ciwei_c@163.com
+              div
+                hr
+                h4
+                pre just do it
+        .col-md-4#sidebar
+          .panel.panel-default
+            .panel-heading
+              h3.panel-title 个人
+            .panel-body
+              .clearfix
+                .col-md-4.col-sm-4.col-xs-4
+                  img.inlineblock.radius10.img-thumbnail.img-responsive(src="public/image/c.png")
+                .col-md-8.col-sm-8.col-xs-8
+                  p 昵称来自电影刺猬的优雅
+                  p 前端路上的小白
+                  p 爱台球，爱吉他，爱电影
+              hr
+              ul.ul-col.ul-col-2
+                li
+                  a.a.fa.fa-weibo.fa-2x(href="https://weibo.com/" target="_blank")
+                li
+                  a.a.fa.fa-github.fa-2x(href="https://github.com/ciwei-c/blog" target="_blank")
+          .panel.panel-default
+            .panel-heading
+              h3.panel-title 说说
+            .panel-body.mood-panel(v-cloak)
+              .margin-bottom-10(v-if="item") {{item.creatAt}}
+              .margin-left-10 {{item.content}}
+              .margin-bottom-10
+              .margin-left-10
+          .panel.panel-default
+            .panel-heading
+              h3.panel-title 文章
+            ul.list-group.articul(v-cloak)
+              li.list-group-item(v-if="listItems" v-for="item in listItems")
+                a(v-bind:href="'artic?'+item._id") {{item.title}}
+              li.padding-16(v-else) 没有发表文章
+            a.padding-10.inlineblock.indent5(href="artics") 查看更多
+  script(src="public/js/about.js")
