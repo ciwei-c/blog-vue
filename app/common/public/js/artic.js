@@ -312,31 +312,18 @@ $(function(){
 		el:".comment-wrap",
 		data:{
 			listItems:"",
+			limitNum:10,
 			count:"",
+			pageLists:"",
 			href:"javascript:",
 			replyForm:"",
-			targetDom:""
+			targetDom:"",
+			commentArtic:""
 		},
 		created:function(){
-			var params = {};
-			var _this = this;
-			params.commentArtic = window.location.href.split('?')[1];
-			params.page = 1;
-			$.get("comment/get_comment_content",params,function(data){
-				data.items.forEach(function(item,index){
-					item.creatAt = moment(item.creatAt).format("YYYY-MM-DD HH:mm");
-					item.floorIndex = (index+1)+((params.page-1)*10)
-					if(item.reply){
-						item.reply.forEach(function(_item){
-							_item.creatAt = moment(_item.creatAt).format("YYYY-MM-DD HH:mm");
-						})
-					}
-				})
-				_this.listItems = data.items;
-			})
-			$.get("comment/get_page_count",{commentArtic:params.commentArtic},function(data){
-				_this.count = data.item.count;
-			})
+			this.commentArtic = window.location.href.split('?')[1];
+			this.onLoadComment();
+			this.onLoadComentCount();
 		},
 		methods:{
 			onReply:function(evt){
@@ -372,6 +359,42 @@ $(function(){
 			},
 			onRemoveReplyForm:function(targetDom,oldReplyForm){
 				targetDom.removeChild(oldReplyForm);
+			},
+			onLoadComment:function(page){
+				var _this = this;
+				var params = {};
+				params.commentArtic = this.commentArtic;
+				params.page = page?page:1;
+				$.get("comment/get_comment_content",params,function(data){
+					data.items.forEach(function(item,index){
+						item.creatAt = moment(item.creatAt).format("YYYY-MM-DD HH:mm");
+						item.floorIndex = (index+1)+((params.page-1)*_this.limitNum)
+						if(item.reply){
+							item.reply.forEach(function(_item){
+								_item.creatAt = moment(_item.creatAt).format("YYYY-MM-DD HH:mm");
+							})
+						}
+					})
+					_this.listItems = data.items;
+				})
+			},
+			onLoadComentCount:function(){
+				var _this = this;
+				$.get("comment/get_page_count",{commentArtic:this.commentArtic},function(data){
+					_this.count = data.item.count;
+					var pageCount = Math.ceil(data.item.count/_this.limitNum);
+					if(pageCount>1){
+						var arr = [];
+						for(var i = 0 ; i < pageCount ; i ++){
+							arr.push(i);
+						}
+						_this.pageLists = arr;
+					}
+				})
+			},
+			onPageClick:function(evt){
+				var page = evt.target.getAttribute("page");
+				this.onLoadComment(page)
 			}
 		}
 	})

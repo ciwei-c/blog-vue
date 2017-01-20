@@ -61,7 +61,9 @@ block content
                           a.a(v-bind:href="href" v-bind:toUser="_item._id" @click="onReply") 回复
               .padding-16(v-else) 暂未有评论
             .text-center
-              ul.pagination.comment-page-ul
+              ul.pagination.comment-page-ul(v-if="pageLists")
+                li(v-for="(item,index) in pageLists")
+                  a(v-bind:href="href" v-bind:page="index+1" @click="onPageClick") {{index+1}}
     .row
       .col-md-10.col-md-offset-1
         .panel.panel-info
