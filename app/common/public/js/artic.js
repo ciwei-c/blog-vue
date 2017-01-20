@@ -313,7 +313,9 @@ $(function(){
 		data:{
 			listItems:"",
 			count:"",
-			href:"javascript:"
+			href:"javascript:",
+			replyForm:"",
+			targetDom:""
 		},
 		created:function(){
 			var params = {};
@@ -338,7 +340,38 @@ $(function(){
 		},
 		methods:{
 			onReply:function(evt){
-				
+				if(this.replyForm){
+					oldReplyForm = this.replyForm;
+					oldTargetDom = this.targetDom;
+					this.onRemoveReplyForm(oldTargetDom,oldReplyForm);
+				}
+				this.targetDom = evt.target.parentNode.parentNode;
+				this.replyForm = document.createElement("form");
+				this.replyForm.innerHTML = this.getReplyInput();
+				this.targetDom.appendChild(this.replyForm);
+			},
+			getReplyInput:function(){
+				var html = "";
+				html = htmls([{
+						tagName:"textarea",
+						class:"form-control noresize reply-text margin-bottom-16",
+						attr:{
+							placeholder:"快发表你的见解吧",
+							rows:"4"
+						}
+					},{
+						tagName:"a",
+						class:"btn btn-primary reply-confirm margin-right-16",
+						text:"发表"
+					},{
+						tagName:"a",
+						class:"btn btn-primary reply-cancel",
+						text:"取消"
+					}]);
+				return html;
+			},
+			onRemoveReplyForm:function(targetDom,oldReplyForm){
+				targetDom.removeChild(oldReplyForm);
 			}
 		}
 	})
