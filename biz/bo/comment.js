@@ -103,7 +103,8 @@ commentSchema.statics.get_comment_content = function(callback,params){
 
 commentSchema.statics.get_page_count = function(callback,params){
 	this.find({commentArtic:params.commentArtic},function(err,comments){
-		var count = {count:comments.length};
+		var count = {};
+		count.count = comments.length?comments.length:0;
 		if(err){
 			callback(err);
 			return;
