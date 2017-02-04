@@ -1,7 +1,19 @@
 extends ../common/layout/layout
 
 block content
-  .intro-header#intro
+  <!--[if lt IE 9]>
+  .text-center.padding-16
+    hr(style="border:1px dashed black")
+    p.red.margin-bottom-16 特别说明
+    p.red 很抱歉给你带来的不便
+    p.red 由于本站所使用的bootstrap及jquery版本较新
+    p.red 不再支持低版本的IE浏览器
+    p.red 如果页面显示不全或出现此特别说明
+    p.red 请升级或更换其他浏览器
+    p.red 如果是360浏览器请使用极速模式
+    hr(style="border:1px dashed black")
+  <![endif]-->
+  .intro-header.intro
     .intro-messeage.bannerpadding.banner.text-center
       h3.white Welcome to here 
       hr.intro-divider
@@ -17,10 +29,11 @@ block content
                   .right.line-height-26.font-size-14
                     span {{item.creatAt}}
                 hr
-                .artic-item(v-html="item.content")
+                .artic-item {{item.breif}}
+                  span.font-size-18 ...
                 .margin-top-10.clearfix
-                  span.left.font-size-18 ...
-                  a.right(v-bind:href="'artic?' + item._id") 查看详情
+                  span 分类：{{item.type}} 
+                  a.right.btn.btn-info(v-bind:href="'artic?' + item._id") 查看详情
               li.padding-16(v-else) 还没有发表文章
           .text-center.margin-bottom-16
             hr
@@ -28,7 +41,7 @@ block content
         .col-md-3.col-sm-3.margin-top-16
           .panel.panel-default
             .panel-heading
-              h3.panel-title 待定
-            .panel-body
-              a.btn.btn-primary.getTest get测试
+              h3.panel-title 闲言碎语
+            .panel-body.mood-panel(v-cloak)
+              .margin-left-10 {{item.content}}
   script(src="public/js/index.js")

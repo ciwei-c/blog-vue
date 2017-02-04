@@ -1,18 +1,4 @@
 $(function(){
-	//说说
-	new Vue({
-		el:".mood-panel",
-		data:{
-			item:""
-		},
-		created:function(){
-			var _this = this;
-			$.get("mood/load_one_mood",{},function(data){
-				data.item.creatAt = moment(data.item.creatAt).format("YYYY-MM-DD HH:mm");
-				_this.item = data.item;
-			})
-		}
-	})
 	//文章
 	new Vue({
 		el:".articul",

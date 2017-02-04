@@ -1,7 +1,8 @@
 /* 通用的样式 */
 [v-cloak]{display: none;}
 .clearfix{overflow: hidden;clear: both;}
-.body{background: url("../image/bg.png");}
+.body{background: url("../image/bg3.jpg");}
+.panel{background-color: rgba(255, 255, 255, 0.63) !important}
 /* 列表类 */
 .ul{list-style: none;padding: 0;margin: 0;}
 .ul-col{list-style: none;padding: 0;margin: 0;width: 100%;text-align: center;}
@@ -15,6 +16,7 @@
 /* 文字类 */
 .black{color: #000;}
 .white{color: #fff;}
+.red{color: red}
 .hr hr{border-top: 1px solid #ccc !important}
 .text-center{text-align: center;}
 .text-left{text-align: left;}
@@ -89,11 +91,13 @@
 .border-right{border-right: 1px solid #e5e5e5}
 .border-bottom{border-bottom: 1px solid #e5e5e5}
 /* 首页 */
+.navbar{border-radius: 0}
+.intro{margin-top: -20px}
 .index-panel {border-left: none;}
 .index-panel .panel-heading{border-left:1px solid #e5e5e5;}
 .articul-index li{border-left: 1px solid #e5e5e5 !important;}
 .articul-index li:hover{background: rgba(229,229,229,0.2);border-left-color: #000 !important}
-.artic-item{max-height: 280px;overflow: hidden;}
+.artic-item{max-height: 100px;overflow: hidden;}
 ._active{background-color: #f5f5f5;}
 .banner{background: url(../image/banner-bg.jpg) center center no-repeat;background-size: 100%}
 .bannerpadding{padding: 60px}
