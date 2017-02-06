@@ -175,21 +175,39 @@ $(function(){
 				var params = {};
 				params.commentArtic = this.commentArtic;
 				params.page = page?page:1;
-				$.get("comment/get_comment_content",params,function(data){
-					if(data.items&&data.items.length>0){
-						data.items.forEach(function(item,index){
-							item.creatAt = moment(item.creatAt).format("YYYY-MM-DD HH:mm");
-							item.floorIndex = (index+1)+((params.page-1)*_this.limitNum);
-							item.ifReply = false;
-							if(item.reply){
-								item.reply.forEach(function(_item){
-									_item.creatAt = moment(_item.creatAt).format("YYYY-MM-DD HH:mm");
-									_item.cindex = index;
-									_item.ifReply = false;
+				$.ajax({
+					url:"comment/get_comment_content",
+					type:"GET",
+					dataType:"json",
+					data:params,
+					timeout:5000,
+					beforeSend:function(){
+						$(".loading").removeClass("none");
+					},
+					success:function(data){
+						_this.listItems = "";
+						setTimeout(function(){
+							$(".loading").addClass("none");
+							if(data.items&&data.items.length>0){
+								data.items.forEach(function(item,index){
+									item.creatAt = moment(item.creatAt).format("YYYY-MM-DD HH:mm");
+									item.floorIndex = (index+1)+((params.page-1)*_this.limitNum);
+									item.ifReply = false;
+									if(item.reply){
+										item.reply.forEach(function(_item){
+											_item.creatAt = moment(_item.creatAt).format("YYYY-MM-DD HH:mm");
+											_item.cindex = index;
+											_item.ifReply = false;
+										})
+									}
 								})
+								_this.listItems = data.items;
 							}
-						})
-						_this.listItems = data.items;
+						},300)
+						
+					},
+					error:function(xhr,status){
+						console.log(xhr,"错误")
 					}
 				})
 			},

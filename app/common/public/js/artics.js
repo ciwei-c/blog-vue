@@ -12,13 +12,31 @@ $(function(){
 				params.page = page||1;
 				params.limitNum = this.limitNum;
 				if(type&&type>0){params.artic_type = type}
-				$.get("artic/load_artics",params,function(data){
-					data.items.forEach(function(item,index){
-						item.creatAt = moment(item.creatAt).format("YYYY-MM-DD HH:mm");
-						item.isOdd = (index%2==0?false:true);
-					})
-					articList.listItems = data.items;
-					_this.onLoadPage(type,page);
+				$.ajax({
+					url:"artic/load_artics",
+					type:"GET",
+					dataType:"json",
+					data:params,
+					timeout:5000,
+					beforeSend:function(){
+						$(".loading").removeClass("none");
+					},
+					success:function(data){
+						articList.listItems = "";
+						pageList.listItems = "";
+						setTimeout(function() {
+							$(".loading").addClass("none");
+							data.items.forEach(function(item,index){
+								item.creatAt = moment(item.creatAt).format("YYYY-MM-DD HH:mm");
+								item.isOdd = (index%2==0?false:true);
+							})
+							articList.listItems = data.items;
+							_this.onLoadPage(type,page);
+						}, 300);
+					},
+					error:function(xhr,status){
+						console.log(xhr,"错误")
+					}
 				})
 			},
 			onLoadPage:function(type,page){

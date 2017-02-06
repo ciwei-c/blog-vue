@@ -21,7 +21,7 @@ block content
       .row
         .col-md-9.col-sm-9.margin-top-16
           .panel.panel-default.index-panel
-            .panel-heading
+            .panel-heading.heading-black
               h3.panel-title 文章
             ul.list-group.articul-index.li-hover(v-cloak)
               li.list-group-item(v-if="listItems" v-for="(item,index) in listItems")
@@ -33,14 +33,14 @@ block content
                   span.font-size-18 ...
                 .margin-top-10.clearfix
                   span 分类：{{item.type}} 
-                  a.right.btn.btn-info(v-bind:href="'artic?' + item._id") 查看详情
+                  a.right.btn.btn-black(v-bind:href="'artic?' + item._id") 查看详情
               li.padding-16(v-else) 还没有发表文章
           .text-center.margin-bottom-16
             hr
             a(href="artics") 查看全部文章
         .col-md-3.col-sm-3.margin-top-16
           .panel.panel-default
-            .panel-heading
+            .panel-heading.heading-black
               h3.panel-title 闲言碎语
             .panel-body.mood-panel(v-cloak)
               .margin-left-10 {{item.content}}

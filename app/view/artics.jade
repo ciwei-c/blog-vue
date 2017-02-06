@@ -4,15 +4,15 @@ block content
   .container
     .row
       .col-md-9.visible-xs-block
-        .panel.panel-primary.cursor.text-center.classifycollapse(data-target="#navtab" data-toggle="collapse" @click="onClassifyClick" v-cloak)
+        .panel.panel-black.cursor.text-center.classifycollapse(data-target="#navtab" data-toggle="collapse" @click="onClassifyClick" v-cloak)
           .panel-heading
-            span.a.fa.black(v-bind:class="classObject")  {{label}}
+            span.a.fa.ccc(v-bind:class="classObject")  {{label}}
     .row
       .col-md-9
         .navbar-collapse.collapse#navtab
           .nav.nav-tabs.nav-justified.navtab.margin-bottom-16(v-cloak)
             li(v-for="(item,index) in listItems" @click="onNavClick" v-bind:class="{active:item.isActive}")
-              a(v-bind:href="href" v-bind:tabindex="index") {{item.type}}
+              a(v-bind:href="href" v-bind:tabindex="index").tab9d {{item.type}}
                 span.badge.margin-left-10 {{item.count}}
       .col-md-1.col-md-offset-1
           a.block.hidden-sm.hidden-xs(href="about")
@@ -22,7 +22,9 @@ block content
         .panel
           .panel-body
             ul.list-group.articul-list.margin-top-16(v-cloak)
-              li.clearfix.padding-bottom-10.border-radius-5(v-if="listItems" v-for="(item,index) in listItems" v-bind:class="{'listbg':item.isOdd}")
+              .loading.none.text-center
+                img(src="public/image/loading.gif")
+              li.clearfix.padding-bottom-10.border-radius-5(v-if="listItems.length" v-for="(item,index) in listItems" v-bind:class="{'listbg':item.isOdd}")
                 .padding-left-10.padding-right-10
                   a(v-bind:href="'artic?'+item._id") {{item.title}}
                   .right

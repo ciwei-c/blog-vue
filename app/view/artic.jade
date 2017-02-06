@@ -35,6 +35,8 @@ block content
               span ({{count}})
           .panel-body
             ul.ul
+              .loading.none.text-center
+                img(src="public/image/loading.gif")
               li.clearfix.margin-bottom-16(v-if="listItems" v-for="(item,index) in listItems" v-bind:commentid="item._id")
                 hr
                 .text-center.inlineblock.col-md-2.col-sm-2

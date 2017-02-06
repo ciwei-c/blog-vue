@@ -1,8 +1,64 @@
 /* 通用的样式 */
 [v-cloak]{display: none;}
 .clearfix{overflow: hidden;clear: both;}
-.body{background: url("../image/bg3.jpg");}
+.body{background: url("../image/bg3.jpg") no-repeat;background-size: 100%}
 .panel{background-color: rgba(255, 255, 255, 0.63) !important}
+.panel-black{background-color: #222 !important}
+.heading-black{background-color: #222 !important;color:#9d9d9d !important;}
+.active .tab9d{background-color: #9d9d9d !important;}
+.btn-black {
+    color: #9d9d9d;
+    background-color: #222;
+    border-color: #222;
+}
+.btn-black:hover{
+	color: #fff;
+}
+.toTop{
+	position:fixed;
+	right:50px;
+	bottom:50px;
+}
+.toTop a{
+	display: inline-block;
+	border-radius: 8px;
+	width: 48px;
+	height: 49px;
+	background: url(../image/top.png) 48px center;
+}
+.toTop a:hover{
+	background: url(../image/top.png) 96px center;
+}
+/* 不同页面的样式 */
+/* 首页 */
+.navbar{border-radius: 0}
+.intro{margin-top: -20px}
+.index-panel {border-left: none;}
+.index-panel .panel-heading{border-left:1px solid #e5e5e5;}
+.articul-index li{border-left: 1px solid #e5e5e5 !important;}
+.articul-index li:hover{background: rgba(229,229,229,0.2);border-left-color: #000 !important}
+.artic-item{max-height: 100px;overflow: hidden;}
+._active{background-color: #f5f5f5;}
+.banner{background: url(../image/banner-bg.jpg) center center no-repeat;background-size: 100%}
+.bannerpadding{padding: 60px}
+@media screen and (max-width: 750px){
+	.bannerpadding{padding: 20px}
+}
+@media screen and (max-width: 400px){
+	.bannerpadding{padding: 5px}
+}
+/* 文章列表 */
+.articul-list li:hover{border-left: 1px solid #000}
+.listbg{background: #eee}
+/* 文章详情 */
+.artic-body table{width: 100% !important}
+.minwidth{min-height: 60px}
+/* 关于 */
+/* 发表 */
+.note-editable table{width: 100% !important}
+
+
+/* 常用样式归类 */
 /* 列表类 */
 .ul{list-style: none;padding: 0;margin: 0;}
 .ul-col{list-style: none;padding: 0;margin: 0;width: 100%;text-align: center;}
@@ -16,7 +72,8 @@
 /* 文字类 */
 .black{color: #000;}
 .white{color: #fff;}
-.red{color: red}
+.red{color: red;}
+.ccc{color: #9d9d9d;}
 .hr hr{border-top: 1px solid #ccc !important}
 .text-center{text-align: center;}
 .text-left{text-align: left;}
@@ -90,29 +147,3 @@
 .border-left{border-left: 1px solid #e5e5e5}
 .border-right{border-right: 1px solid #e5e5e5}
 .border-bottom{border-bottom: 1px solid #e5e5e5}
-/* 首页 */
-.navbar{border-radius: 0}
-.intro{margin-top: -20px}
-.index-panel {border-left: none;}
-.index-panel .panel-heading{border-left:1px solid #e5e5e5;}
-.articul-index li{border-left: 1px solid #e5e5e5 !important;}
-.articul-index li:hover{background: rgba(229,229,229,0.2);border-left-color: #000 !important}
-.artic-item{max-height: 100px;overflow: hidden;}
-._active{background-color: #f5f5f5;}
-.banner{background: url(../image/banner-bg.jpg) center center no-repeat;background-size: 100%}
-.bannerpadding{padding: 60px}
-@media screen and (max-width: 750px){
-	.bannerpadding{padding: 20px}
-}
-@media screen and (max-width: 400px){
-	.bannerpadding{padding: 5px}
-}
-/* 文章列表 */
-.articul-list li:hover{border-left: 1px solid #000}
-.listbg{background: #eee}
-/* 文章详情 */
-.artic-body table{width: 100% !important}
-.minwidth{min-height: 60px}
-/* 关于 */
-/* 发表 */
-.note-editable table{width: 100% !important}
