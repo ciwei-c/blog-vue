@@ -19,11 +19,11 @@ $(function(){
 					data:params,
 					timeout:5000,
 					beforeSend:function(){
-						$(".loading").removeClass("none");
 					},
 					success:function(data){
 						articList.listItems = "";
 						pageList.listItems = "";
+						$(".loading").removeClass("none");
 						setTimeout(function() {
 							$(".loading").addClass("none");
 							data.items.forEach(function(item,index){
@@ -104,9 +104,10 @@ $(function(){
 				{type:"全部",count:0,isActive:true},
 				{type:"随笔",count:0,isActive:false},
 				{type:"html",count:0,isActive:false},
+				{type:"css",count:0,isActive:false},
 				{type:"js",count:0,isActive:false},
-				{type:"node",count:0,isActive:false},
-				{type:"mongodb",count:0,isActive:false}
+				{type:"前端",count:0,isActive:false},
+				{type:"后台",count:0,isActive:false}
 			]
 		},
 		created:function(){

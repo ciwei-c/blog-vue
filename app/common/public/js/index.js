@@ -23,7 +23,7 @@ $(function(){
 			params.limit = 8;
 			var _this = this;
 			var d = document.createElement("div");
-			var type = ["全部","随笔","html","js","node","mongodb"];
+			var type = ["全部","随笔","html","css","js","前端","后台"];
 			$.get("artic/load_artics",params,function(data){
 				if(data.ok == 1 && data.items.length){
 					data.items.forEach(function(item){

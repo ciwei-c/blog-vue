@@ -182,10 +182,10 @@ $(function(){
 					data:params,
 					timeout:5000,
 					beforeSend:function(){
-						$(".loading").removeClass("none");
 					},
 					success:function(data){
 						_this.listItems = "";
+						$(".loading").removeClass("none");
 						setTimeout(function(){
 							$(".loading").addClass("none");
 							if(data.items&&data.items.length>0){
