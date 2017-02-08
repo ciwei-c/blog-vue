@@ -23,14 +23,14 @@ $(function(){
 			params.limit = 8;
 			var _this = this;
 			var d = document.createElement("div");
-			var type = ["全部","随笔","html","css","js","前端","后台"];
+			var type = articType();
 			$.get("artic/load_artics",params,function(data){
 				if(data.ok == 1 && data.items.length){
 					data.items.forEach(function(item){
 						d.innerHTML = item.content;
 						item.breif = d.innerText.substring(0,80);
 						item.creatAt = moment(item.creatAt).format("YYYY-MM-DD HH:mm");
-						item.type = type[item.type];
+						item.typeName = type[item.type];
 					})
 					_this.listItems = data.items;
 				}

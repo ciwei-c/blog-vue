@@ -32,7 +32,8 @@ block content
                 .artic-item {{item.breif}}
                   span.font-size-18 ...
                 .margin-top-10.clearfix
-                  span 分类：{{item.type}} 
+                  span
+                  a.fa.fa-tags(v-bind:href="'artics?type='+item.type")   {{item.typeName}}
                   a.right.btn.btn-black(v-bind:href="'artic?' + item._id") 查看详情
               li.padding-16(v-else) 还没有发表文章
           .text-center.margin-bottom-16

@@ -4,6 +4,12 @@ block content
   .container
     .row
       .col-md-10.hr.col-md-offset-1
+        ol.breadcrumb.breadcrumbNav(v-cloak)
+          li
+            a(href="artics") 全部
+          li
+            a(v-bind:href="'artics?type='+upSortType") {{upSort}}
+          li.active {{nowArtic}}
         hr
     .row
       .col-md-10.col-md-offset-1
@@ -19,13 +25,11 @@ block content
                 .artic-body(v-html="item.content")
                 hr
                 .artic-footer.padding-left-16.padding-right-16
-                  ul.pager.pre-next-ul
-                    li.previous(v-if="prevnext.prev")
-                      a.btn.btn-default(v-bind:href="'artic?'+prevnext.prev") 上一篇
-                    span.left(v-else) 当前已经是第一篇
-                    li.next(v-if="prevnext.next")
-                      a.btn.btn-default(v-bind:href="'artic?'+prevnext.next") 下一篇
-                    span.right(v-else) 当前已经是最后一篇
+                  ul.ul
+                    li.previous.font-size-14(v-if="prevArtic._id") 上一篇：
+                      a(v-bind:href="'artic?'+prevArtic._id") {{prevArtic.title}}
+                    li.next.font-size-14(v-if="nextArtic._id") 下一篇：
+                      a(v-bind:href="'artic?'+nextArtic._id") {{nextArtic.title}}
 
     .row
       .col-md-10.col-md-offset-1
@@ -39,7 +43,7 @@ block content
                 img(src="public/image/loading.gif")
               li.clearfix.margin-bottom-16(v-if="listItems" v-for="(item,index) in listItems" v-bind:commentid="item._id")
                 hr
-                .text-center.inlineblock.col-md-2.col-sm-2
+                .text-center.inlineblock.col-md-2.col-sm-2.margin-bottom-16
                   img.size60.img-responsive.img-thumbnail(v-bind:src="item.fromUser.logo")
                   .font-size-12 {{item.fromUser.nickName}}
                 .col-md-10.col-sm-10

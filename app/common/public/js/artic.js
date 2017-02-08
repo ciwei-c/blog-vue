@@ -4,7 +4,8 @@ $(function(){
 		el:".artic-wrap",
 		data:{
 			item:"",
-			prevnext:""
+			prevArtic:"",
+			nextArtic:"",
 		},
 		created:function(){
 			var params = {};
@@ -15,8 +16,22 @@ $(function(){
 				var data = data.item;
 				data.artic.creatAt = moment(data.artic.creatAt).format("YYYY-MM-DD HH:mm");
 				_this.item = data.artic;
-				_this.prevnext = data.prevNextArtic;
+				_this.prevArtic = data.prevArtic;
+				_this.nextArtic = data.nextArtic;
+				var k = articType();
+				breadcrumb.upSort = k[data.artic.type];
+				breadcrumb.upSortType = data.artic.type;
+				breadcrumb.nowArtic = data.artic.title;
 			});
+		}
+	})
+	//面包屑导航
+	var breadcrumb = new Vue({
+		el:".breadcrumbNav",
+		data:{
+			upSort:"",
+			upSortType:"",
+			nowArtic:""
 		}
 	})
 	//发表评论
@@ -182,10 +197,10 @@ $(function(){
 					data:params,
 					timeout:5000,
 					beforeSend:function(){
+						$(".loading").removeClass("none");
+						_this.listItems = "";
 					},
 					success:function(data){
-						_this.listItems = "";
-						$(".loading").removeClass("none");
 						setTimeout(function(){
 							$(".loading").addClass("none");
 							if(data.items&&data.items.length>0){

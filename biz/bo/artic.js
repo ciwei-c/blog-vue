@@ -77,6 +77,8 @@ articSchema.statics.load_by_id = function(callback,params){
 		}
 		if(params.prevnext){
 			_this.find({},function(err,artics){
+				var prevArtic = {};
+				var nextArtic = {};
 				var prevNextArtic = {};
 				var nowIndex = "";
 				for(var i = 0;i < artics.length ; i ++){
@@ -86,17 +88,22 @@ articSchema.statics.load_by_id = function(callback,params){
 				}
 			if(artics.length>1){
 				if(nowIndex == 0){
-					prevNextArtic.prev = artics[nowIndex+1]._id;
+					prevArtic._id = artics[nowIndex+1]._id;
+					prevArtic.title = artics[nowIndex+1].title;
 				}else if(nowIndex == artics.length-1){
-					prevNextArtic.next = artics[nowIndex-1]._id;
+					nextArtic._id = artics[nowIndex-1]._id;
+					nextArtic.title = artics[nowIndex-1].title;
 				}else{
-					prevNextArtic.next = artics[nowIndex-1]._id;
-					prevNextArtic.prev = artics[nowIndex+1]._id;
+					nextArtic._id = artics[nowIndex-1]._id;
+					prevArtic._id = artics[nowIndex+1]._id;
+					nextArtic.title = artics[nowIndex-1].title;
+					prevArtic.title = artics[nowIndex+1].title;
 				}
 			}
 				var data = {};
 				data.artic = artic;
-				data.prevNextArtic = prevNextArtic;
+				data.prevArtic = prevArtic;
+				data.nextArtic = nextArtic;
 				callback(null,data)
 			})
 		}else{

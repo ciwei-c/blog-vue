@@ -6,7 +6,7 @@ $(function(){
 			pageCount:0
 		},
 		methods:{
-			onLoadArtics:function(type,page){
+			onLoadArtics:function(type,page,Alist,Plist){
 				var params = {};
 				var _this = this;
 				params.page = page||1;
@@ -19,11 +19,15 @@ $(function(){
 					data:params,
 					timeout:5000,
 					beforeSend:function(){
+						if(Alist){
+							Alist.listItems = "";
+						}
+						if(Plist){
+							Plist.listItems = "";
+						}
+						$(".loading").removeClass("none");
 					},
 					success:function(data){
-						articList.listItems = "";
-						pageList.listItems = "";
-						$(".loading").removeClass("none");
 						setTimeout(function() {
 							$(".loading").addClass("none");
 							data.items.forEach(function(item,index){
@@ -100,19 +104,17 @@ $(function(){
 		el:"#navtab",
 		data:{
 			href:"javascript:",
-			listItems:[
-				{type:"全部",count:0,isActive:true},
-				{type:"随笔",count:0,isActive:false},
-				{type:"html",count:0,isActive:false},
-				{type:"css",count:0,isActive:false},
-				{type:"js",count:0,isActive:false},
-				{type:"前端",count:0,isActive:false},
-				{type:"后台",count:0,isActive:false}
-			]
+			listItems:articType(true)
 		},
 		created:function(){
+			if(window.location.href.split("?")[1]){
+				var type = "";
+				type = window.location.href.split("?")[1];
+				type = type.split("=")[1];
+				this.listItems[0].isActive = false;
+				this.listItems[type].isActive = true;
+			}
 			methodsVue.onLoadCounts();
-			methodsVue.onLoadArtics();
 		},
 		methods:{
 			onNavClick:function(evt){
@@ -123,7 +125,7 @@ $(function(){
 				})
 				this.listItems[tabIndex].isActive = true;
 				//发送ajax请求
-				methodsVue.onLoadArtics(tabIndex);
+				methodsVue.onLoadArtics(tabIndex,null,articList,pageList);
 			}
 		}
 	})
@@ -132,6 +134,17 @@ $(function(){
 		el:".articul-list",
 		data:{
 			listItems:""
+		},
+		created:function(){
+			var _this = this;
+			if(window.location.href.split("?")[1]){
+				var type = "";
+				type = window.location.href.split("?")[1];
+				type = type.split("=")[1];
+				methodsVue.onLoadArtics(type,null,_this);
+			}else{
+				methodsVue.onLoadArtics(null,null,_this);
+			}
 		}
 	})
 	//分页
@@ -146,7 +159,7 @@ $(function(){
 			onPageClick:function(evt){
 				var pageNum = "";
 				var pageNum = Number(evt.target.getAttribute("page"));
-				methodsVue.onLoadArtics(this.type,pageNum)
+				methodsVue.onLoadArtics(this.type,pageNum,articList)
 			}
 		}
 	})
