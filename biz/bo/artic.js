@@ -136,7 +136,14 @@ articSchema.statics.get_type_count = function(callback,params){
 	})
 };
 articSchema.statics.load_artics = function(callback,params){
-	var result = (params.artic_type?this.find({type:params.artic_type}):this.find({}));
+	var condition = {}
+	if(params.artic_type){
+		condition.type = params.artic_type;
+	}
+	if(params.search){
+		condition.title = {$regex:params.search};
+	}
+	var result = this.find(condition);
 	var skipNum;
 	if(params.page&&params.limitNum){
 		var limitNum = Number(params.limitNum)

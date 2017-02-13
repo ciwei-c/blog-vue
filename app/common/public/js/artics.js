@@ -6,42 +6,62 @@ $(function(){
 			pageCount:0
 		},
 		methods:{
-			onLoadArtics:function(type,page,Alist,Plist){
+			onLoadArtics:function(type,page,Alist,Plist,search){
 				var params = {};
 				var _this = this;
 				params.page = page||1;
 				params.limitNum = this.limitNum;
 				if(type&&type>0){params.artic_type = type}
-				$.ajax({
-					url:"artic/load_artics",
-					type:"GET",
-					dataType:"json",
-					data:params,
-					timeout:5000,
-					beforeSend:function(){
-						if(Alist){
-							Alist.listItems = "";
+				if(search||search == ""){params.search = search;delete params.limitNum}
+				if(!search&&search!=""){
+					$.ajax({
+						url:"artic/load_artics",
+						type:"GET",
+						dataType:"json",
+						data:params,
+						timeout:5000,
+						beforeSend:function(){
+							if(Alist){
+								Alist.listItems = "";
+							}
+							if(Plist){
+								Plist.listItems = "";
+							}
+							$(".loading").removeClass("none");
+						},
+						success:function(data){
+							setTimeout(function() {
+								$(".loading").addClass("none");
+								data.items.forEach(function(item,index){
+									item.creatAt = moment(item.creatAt).format("YYYY-MM-DD HH:mm");
+									item.isOdd = (index%2==0?false:true);
+								})
+								articList.listItems = data.items;
+								_this.onLoadPage(type,page);
+							}, 300);
+						},
+						error:function(xhr,status){
+							console.log(xhr,"错误")
 						}
-						if(Plist){
-							Plist.listItems = "";
+					})
+				}else{
+					$.ajax({
+						url:"artic/load_artics",
+						type:"GET",
+						dataType:"json",
+						data:params,
+						timeout:5000,
+						beforeSend:function(){
+							//$(".loading").removeClass("none");
+						},
+						success:function(data){
+							searchResult.listItems = data.items;
+						},
+						error:function(xhr,status){
+							console.log(xhr,"错误")
 						}
-						$(".loading").removeClass("none");
-					},
-					success:function(data){
-						setTimeout(function() {
-							$(".loading").addClass("none");
-							data.items.forEach(function(item,index){
-								item.creatAt = moment(item.creatAt).format("YYYY-MM-DD HH:mm");
-								item.isOdd = (index%2==0?false:true);
-							})
-							articList.listItems = data.items;
-							_this.onLoadPage(type,page);
-						}, 300);
-					},
-					error:function(xhr,status){
-						console.log(xhr,"错误")
-					}
-				})
+					})
+				}
 			},
 			onLoadPage:function(type,page){
 				var k = "";
@@ -78,6 +98,32 @@ $(function(){
 					}
 				});
 			}
+		}
+	})
+	//搜索框
+	var searchBox = new Vue({
+		el:".searchbox",
+		data:{
+			search:""
+		},
+		methods:{
+			onSearch:function(){
+				searchResult.noSearch = false;
+				if(!this.search){
+					searchResult.noSearch = true;
+					return;
+				}
+				methodsVue.onLoadArtics(null,null,null,null,this.search);
+			}
+		}
+	})
+	var searchResult = new Vue({
+		el:"#searchresult",
+		data:{
+			noSearch:false,
+			listItems:"",
+			pageList:"",
+			type:articType()
 		}
 	})
 	//响应式导航栏

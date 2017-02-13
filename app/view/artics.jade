@@ -2,6 +2,24 @@ extends ../common/layout/layout
 
 block content
   .container
+    .row.margin-bottom-16.col-md-4.col-lg-4
+      .input-group.searchbox
+        input.text.form-control(v-model="search" placeholder="搜索文章标题")
+        div.input-group-btn
+          a.btn.btn-black(@click="onSearch" href="#searchresult" data-toggle="modal" data-backdrop="static") 搜索
+    .modal.fade#searchresult
+      .modal-dialog
+        .modal-content
+          .modal-header
+            h4.modal-title 搜索文章列表
+              span.close(data-dismiss="modal") &times
+          .modal-body(v-cloak)
+            ul.ul
+              li(v-if="noSearch") 请输入查询条件
+              li(v-else-if="listItems.length == 0") 未找到查询结果
+              li.margin-bottom-16(v-else-if="listItems.length>0" v-for="item in listItems")
+                a(v-bind:href="'artic?'+item._id") {{item.title}}  (分类：{{type[item.type]}})
+                hr
     .row
       .col-md-9.visible-xs-block
         .panel.panel-black.cursor.text-center.classifycollapse(data-target="#navtab" data-toggle="collapse" @click="onClassifyClick" v-cloak)
