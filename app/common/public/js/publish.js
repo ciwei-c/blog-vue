@@ -177,6 +177,8 @@ $(function(){
 		if(evt.target.innerText == "修改"){
 			$.post("artic/load_by_id",params,function(data){
 				if(data.ok == 1){
+					artictype.type = data.item.type;
+					$(".typechoose").html(articType()[artictype.type]+"<span class='caret'></span>");
 					$(".artic-title").val(data.item.title);
 					$(".note-editable").html(data.item.content);
 					$("#articlistmodal").modal("hide");
