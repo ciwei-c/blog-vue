@@ -4,7 +4,12 @@ $(function(){
 		$("head").append("<link href='bower/summernote/summernote.css' rel='stylesheet'>")
 		$(".summernote").summernote({
 			height:500,
-			lang:'zh-CN' 
+			lang:'zh-CN',
+			callbacks:{
+				onImageUpload:function(files,editor,$editable){
+					uploadImage(files);
+				}
+			}
 		});
 		$(".note-statusbar").remove();
 		$("#passmodal").modal({
@@ -37,6 +42,29 @@ $(function(){
 			}
 		});
 	});
+	function uploadImage(files){
+		var file = files[0];
+		var filename = "";
+		filename = file.name;
+		delete file.name;
+		if(file.type == ""||file.type.split("/")[0] != "image"){
+			alert("请选择图片！");
+			return;
+		}
+		var data = new FormData();
+		data.set("topath","articimgs");
+		data.append("c_file",file);
+		$.ajax({
+			url: "upload",
+		  	type: "POST",
+		  	data: data,
+		  	contentType: false, //必须false才会避开jQuery对 formdata 的默认处理 XMLHttpRequest会对 formdata 进行正确的处理 
+		  	processData: false, //必须false才会自动加上正确的Content-Type
+		  	success: function (data) {
+		  		$('.summernote').summernote('insertImage', data.path); 
+		  	}
+		 });
+	}
 	//取消
 	var cancel = {};
 	//文章相关

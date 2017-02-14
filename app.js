@@ -46,6 +46,5 @@ app.use(function(req,res,next){
 app.listen(port,function(){
 	console.log('app started on port 3000');
 });
-
 //路由
 require('./biz/routes/index')(app);

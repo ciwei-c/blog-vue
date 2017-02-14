@@ -70,6 +70,7 @@
   /* 四列 */
   .ul-col-4 li{width: 25%}
 /* 文字类 */
+.li{list-style: none;}
 .black{color: #000;}
 .white{color: #fff;}
 .red{color: red;}

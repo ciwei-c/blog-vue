@@ -114,6 +114,7 @@ $(function(){
 					return;
 				}
 				methodsVue.onLoadArtics(null,null,null,null,this.search);
+				this.search = "";
 			}
 		}
 	})

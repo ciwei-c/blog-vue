@@ -15,6 +15,8 @@ block content
               span.close(data-dismiss="modal") &times
           .modal-body(v-cloak)
             ul.ul
+              .searchLoading.none.text-center
+                img(src="public/image/loading.gif")
               li(v-if="noSearch") 请输入查询条件
               li(v-else-if="listItems.length == 0") 未找到查询结果
               li.margin-bottom-16(v-else-if="listItems.length>0" v-for="item in listItems")
@@ -46,9 +48,8 @@ block content
                 .padding-left-10.padding-right-10
                   a(v-bind:href="'artic?'+item._id") {{item.title}}
                   .right
-                    span.fa.fa-user-o.margin-right-16  ciwei_c
+                    span.fa.fa-user-o.margin-right-16  {{item.author}}
                     span.fa.fa-clock-o  {{item.creatAt}}
-              li.padding-16(v-else) 该分类未发表文章
           .text-center
             ul.pagination.margin-center.artics-page-ul(v-cloak)
               li(v-if="listItems" v-for="(item,index) in listItems" v-bind:class="{active:item.isActive}" @click="onPageClick")

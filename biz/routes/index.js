@@ -42,7 +42,10 @@ var handleResult = function(err,data,res,req){
 var multer = require('multer');
 var storage = multer.diskStorage({
     destination: function(req, file, callback) {
-        callback(null, 'app/common/public/upload');
+    	var topath = "";
+    	topath = req.body.topath?req.body.topath:"default";
+    	topath = "/"+topath;
+        callback(null, 'app/common/public/upload'+topath);
     },
     filename: function(req, file, callback) {
         callback(null, Date.now()+file.originalname);
@@ -64,13 +67,13 @@ module.exports = function(app){
 	_get(app,"artic","c_文章详情");
 	_get(app,"about","c_关于");
 	_get(app,"publish","c_发表");
-	//post请求
-	app.post("/upload",uploads.single('user-logo'),function(req,res){
+	//upload上传
+	app.post("/upload",uploads.single('c_file'),function(req,res){
 		var file = req.file;
 		file.path = file.path.split("common")[1];
 		res.send(file);
-		return;
 	});
+	//post请求
 	app.post("*",function(req,res){
 		execBiz(req.path, req.body, res, req)
 	});

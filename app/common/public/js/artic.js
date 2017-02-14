@@ -90,7 +90,8 @@ $(function(){
 					return;
 				}
 				var data = new FormData();
-				data.append("user-logo",file);
+				data.set("topath","user");
+				data.append("c_file",file);
 				$.ajax({
 					url: "upload",
 				  	type: "POST",
