@@ -52,10 +52,18 @@ $(function(){
 						data:params,
 						timeout:5000,
 						beforeSend:function(){
-							//$(".loading").removeClass("none");
+							searchResult.listItems = "";
+							$(".searchLoading").removeClass("none");
 						},
 						success:function(data){
-							searchResult.listItems = data.items;
+							setTimeout(function(){
+								$(".searchLoading").addClass("none");
+								if(data.items.length){
+									searchResult.listItems = data.items;
+								}else{
+									searchResult.listItems = "nofound";
+								}
+							},500)
 						},
 						error:function(xhr,status){
 							console.log(xhr,"错误")
@@ -119,7 +127,7 @@ $(function(){
 		}
 	})
 	var searchResult = new Vue({
-		el:"#searchresult",
+		el:".searchresult",
 		data:{
 			noSearch:false,
 			listItems:"",

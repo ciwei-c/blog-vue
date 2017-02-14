@@ -13,13 +13,13 @@ block content
           .modal-header
             h4.modal-title 搜索文章列表
               span.close(data-dismiss="modal") &times
-          .modal-body(v-cloak)
-            ul.ul
+          .modal-body
+            ul.ul.searchresult(v-cloak)
               .searchLoading.none.text-center
                 img(src="public/image/loading.gif")
               li(v-if="noSearch") 请输入查询条件
-              li(v-else-if="listItems.length == 0") 未找到查询结果
-              li.margin-bottom-16(v-else-if="listItems.length>0" v-for="item in listItems")
+              li(v-else-if="listItems=='nofound'") 未找到查询结果
+              li.margin-bottom-16(v-else-if="Object.prototype.toString.call(listItems)=='[object Array]'" v-for="item in listItems")
                 a(v-bind:href="'artic?'+item._id") {{item.title}}  (分类：{{type[item.type]}})
                 hr
     .row
