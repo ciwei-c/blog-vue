@@ -115,7 +115,8 @@ $(function(){
 				params.commentArtic = location.href.split("?")[1];
 				$.post("comment/comment",params,function(data){
 					if(data.ok == 1){
-						window.location.href = "artic?"+window.location.href.split("?")[1];
+						commentList.onLoadComment();
+						commentList.onLoadCommentCount();
 						_this.commentText = "";
 					}
 				})

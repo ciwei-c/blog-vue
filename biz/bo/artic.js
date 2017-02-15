@@ -6,6 +6,7 @@ var articSchema = new Schema({
 	content:String,
 	title:String,
 	type:String,
+	pv:{type:Number,default:0},
 	author:{type:String,default:"ciwei_c"},
 	creatAt:{type:Date,default:Date.now()}
 })
@@ -69,6 +70,12 @@ articSchema.statics.update_artic = function(callback,params){
 articSchema.statics.load_by_id = function(callback,params){
 	var _id = params._id;
 	var _this = this;
+	this.update({_id,_id},{$inc:{pv:1}},function(err){
+		if(err){
+			console.log(err);
+			callback(err);
+		}
+	})
 	this.findOne({_id:_id},function(err,artic){
 		if(err){
 			console.log(err);

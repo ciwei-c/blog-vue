@@ -19,8 +19,10 @@ block content
               .artic-header
                 h3 {{item.title}}
                   .right.font-size-14.line-height-26
-                    span.fa.fa-user-o.margin-right-16   {{item.author}}
-                    span.fa.fa-clock-o    {{item.creatAt}}
+                    span.fa.fa-user-o.margin-right-16   
+                      a(v-bind:href="'/about'")   {{item.author}}
+                    span.fa.fa-clock-o.margin-right-16    {{item.creatAt}}
+                    span.margin-right-16   阅读({{item.pv}})
                 hr
                 .artic-body(v-html="item.content")
                 hr
