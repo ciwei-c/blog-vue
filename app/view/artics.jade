@@ -15,7 +15,7 @@ block content
               span.close(data-dismiss="modal") &times
           .modal-body
             ul.ul.searchresult(v-cloak)
-              .searchLoading.none.text-center
+              .text-center(v-show="isShow")
                 img(src="public/image/loading.gif")
               li(v-if="noSearch") 请输入查询条件
               li(v-else-if="listItems=='nofound'") 未找到查询结果
@@ -42,7 +42,7 @@ block content
         .panel
           .panel-body
             ul.list-group.articul-list.margin-top-16(v-cloak)
-              .loading.none.text-center
+              .text-center(v-show="isShow")
                 img(src="public/image/loading.gif")
               li.clearfix.padding-bottom-10.border-radius-5(v-if="listItems.length" v-for="(item,index) in listItems" v-bind:class="{'listbg':item.isOdd}")
                 .padding-left-10.padding-right-10

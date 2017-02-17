@@ -1,10 +1,12 @@
 /* 通用的样式 */
 [v-cloak]{display: none;}
 .clearfix{overflow: hidden;clear: both;}
-.body{background: url("../image/bg3.jpg") no-repeat;background-size: 100%}
+.body{background: url("../image/bg3.jpg") repeat-y;background-size: 100%}
 .panel{background-color: rgba(255, 255, 255, 0.63) !important}
 .panel-black{background-color: #222 !important}
 .heading-black{background-color: #222 !important;color:#9d9d9d !important;}
+.panel-transparent{background-color: transparent !important}
+.heading-transparent{background-color: transparent !important;color:#000 !important;}
 .active .tab9d{background-color: #9d9d9d !important;}
 .btn-black {
     color: #9d9d9d;
@@ -33,10 +35,35 @@
 /* 首页 */
 .navbar{border-radius: 0}
 .intro{margin-top: -20px}
-.index-panel {border-left: none;}
+.index-panel{border-left: none;}
 .index-panel .panel-heading{border-left:1px solid #e5e5e5;}
-.articul-index li{border-left: 1px solid #e5e5e5 !important;}
-.articul-index li:hover{background: rgba(229,229,229,0.2);border-left-color: #000 !important}
+.articul-index li{
+	box-shadow:0 0 0 !important;
+	background-color:rgba(0,0,0,0);
+	transition: box-shadow 0.5s,transform 0.2s;
+}
+.articul-index li:hover{
+	box-shadow: 15px 15px 15px !important;
+	transform-origin:0 0;
+	transform: scale(1.02,1);
+}
+@keyframes shadow {
+	from{
+		transform: scale(1);
+	}
+	to{
+		transform: scale(1.2);
+	}
+}
+@-webkit-keyframes shadow
+{
+	from{
+		box-shadow:0 0 0 !important;
+	}
+	to{
+		box-shadow:15px 15px 15px !important;
+	}
+}
 .artic-item{max-height: 100px;overflow: hidden;}
 ._active{background-color: #f5f5f5;}
 .banner{background: url(../image/banner-bg.jpg) center center no-repeat;background-size: 100%}

@@ -20,10 +20,12 @@ block content
   .container
       .row
         .col-md-9.col-sm-9.margin-top-16
-          .panel.panel-default.index-panel
-            .panel-heading.heading-black
+          .panel.panel-transparent.index-panel
+            .panel-heading.heading-transparent
               h3.panel-title 文章
             ul.list-group.articul-index.li-hover(v-cloak)
+              .text-center(v-show="isShow")
+                img(src="public/image/loading.gif")
               li.list-group-item(v-if="listItems" v-for="(item,index) in listItems")
                 h3 {{item.title}}
                   .right.line-height-26.font-size-14
@@ -40,8 +42,8 @@ block content
             hr
             a(href="artics") 查看全部文章
         .col-md-3.col-sm-3.margin-top-16
-          .panel.panel-default
-            .panel-heading.heading-black
+          .panel.panel-transparent
+            .panel-heading.heading-transparent
               h3.panel-title 闲言碎语
             .panel-body.mood-panel(v-cloak)
               .margin-left-10 {{item.content}}

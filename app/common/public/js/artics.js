@@ -6,14 +6,22 @@ $(function(){
 			pageCount:0
 		},
 		methods:{
-			onLoadArtics:function(type,page,Alist,Plist,search){
+			onLoadArtics:function(options){
+				var type,page,Alist,Plist,search
+				type = options.type||"";
+				page = options.page||1;
+				Alist = options.Alist||"";
+				Plist = options.Plist||"";
+				search = options.search||"";
+				//searchResult = options.searchResult||"";
 				var params = {};
 				var _this = this;
-				params.page = page||1;
+				params.page = page;
 				params.limitNum = this.limitNum;
 				if(type&&type>0){params.artic_type = type}
-				if(search||search == ""){params.search = search;delete params.limitNum}
-				if(!search&&search!=""){
+				if(search||search != ""){
+					params.search = search;
+					delete params.limitNum;
 					$.ajax({
 						url:"artic/load_artics",
 						type:"GET",
@@ -21,24 +29,18 @@ $(function(){
 						data:params,
 						timeout:5000,
 						beforeSend:function(){
-							if(Alist){
-								Alist.listItems = "";
-							}
-							if(Plist){
-								Plist.listItems = "";
-							}
-							$(".loading").removeClass("none");
+							searchResult.listItems = "";
+							searchResult.isShow = true;
 						},
 						success:function(data){
-							setTimeout(function() {
-								$(".loading").addClass("none");
-								data.items.forEach(function(item,index){
-									item.creatAt = moment(item.creatAt).format("YYYY-MM-DD HH:mm");
-									item.isOdd = (index%2==0?false:true);
-								})
-								articList.listItems = data.items;
-								_this.onLoadPage(type,page);
-							}, 300);
+							setTimeout(function(){
+								searchResult.isShow = false;
+								if(data.items.length){
+									searchResult.listItems = data.items;
+								}else{
+									searchResult.listItems = "nofound";
+								}
+							},500)
 						},
 						error:function(xhr,status){
 							console.log(xhr,"错误")
@@ -52,18 +54,24 @@ $(function(){
 						data:params,
 						timeout:5000,
 						beforeSend:function(){
-							searchResult.listItems = "";
-							$(".searchLoading").removeClass("none");
+							if(Alist){
+								Alist.listItems = "";
+								Alist.isShow = true;
+							}
+							if(Plist){
+								Plist.listItems = "";
+							}
 						},
 						success:function(data){
-							setTimeout(function(){
-								$(".searchLoading").addClass("none");
-								if(data.items.length){
-									searchResult.listItems = data.items;
-								}else{
-									searchResult.listItems = "nofound";
-								}
-							},500)
+							setTimeout(function() {
+								Alist.isShow = false;
+								data.items.forEach(function(item,index){
+									item.creatAt = moment(item.creatAt).format("YYYY-MM-DD HH:mm");
+									item.isOdd = (index%2==0?false:true);
+								})
+								Alist.listItems = data.items;
+								_this.onLoadPage(type,page);
+							}, 300);
 						},
 						error:function(xhr,status){
 							console.log(xhr,"错误")
@@ -121,7 +129,9 @@ $(function(){
 					searchResult.noSearch = true;
 					return;
 				}
-				methodsVue.onLoadArtics(null,null,null,null,this.search);
+				methodsVue.onLoadArtics({
+					search:this.search
+				});
 				this.search = "";
 			}
 		}
@@ -132,6 +142,7 @@ $(function(){
 			noSearch:false,
 			listItems:"",
 			pageList:"",
+			isShow:false,
 			type:articType()
 		}
 	})
@@ -180,7 +191,11 @@ $(function(){
 				})
 				this.listItems[tabIndex].isActive = true;
 				//发送ajax请求
-				methodsVue.onLoadArtics(tabIndex,null,articList,pageList);
+				methodsVue.onLoadArtics({
+					type:tabIndex,
+					Alist:articList,
+					Plist:pageList
+				});
 			}
 		}
 	})
@@ -188,7 +203,8 @@ $(function(){
 	var articList = new Vue({
 		el:".articul-list",
 		data:{
-			listItems:""
+			listItems:"",
+			isShow:false
 		},
 		created:function(){
 			var _this = this;
@@ -196,9 +212,14 @@ $(function(){
 				var type = "";
 				type = window.location.href.split("?")[1];
 				type = type.split("=")[1];
-				methodsVue.onLoadArtics(type,null,_this);
+				methodsVue.onLoadArtics({
+					type:type,
+					Alist:_this
+				});
 			}else{
-				methodsVue.onLoadArtics(null,null,_this);
+				methodsVue.onLoadArtics({
+					Alist:_this
+				});
 			}
 		}
 	})
@@ -214,7 +235,11 @@ $(function(){
 			onPageClick:function(evt){
 				var pageNum = "";
 				var pageNum = Number(evt.target.getAttribute("page"));
-				methodsVue.onLoadArtics(this.type,pageNum,articList)
+				methodsVue.onLoadArtics({
+					type:this.type,
+					page:pageNum,
+					Alist:articList
+				})
 			}
 		}
 	})
