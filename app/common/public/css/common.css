@@ -37,6 +37,7 @@
 .intro{margin-top: -20px}
 .index-panel{border-left: none;}
 .index-panel .panel-heading{border-left:1px solid #e5e5e5;}
+.tags-panel a{font-family: "微软雅黑";color: #000;padding: 3px 10px;width: 60%;text-align: center;border-radius: 5px}
 .articul-index li{
 	box-shadow:0 0 0 !important;
 	background-color:rgba(0,0,0,0);
@@ -81,6 +82,8 @@
 .artic-body table{width: 100% !important}
 .minwidth{min-height: 60px}
 /* 关于 */
+.about-title {text-shadow: 5px 0 8px}
+.about-wexin {box-shadow: 10px 10px 20px}
 /* 发表 */
 .note-editable table{width: 100% !important}
 
@@ -121,7 +124,9 @@
 .font-size-18{font-size: 18px}
 .font-size-20{font-size: 20px}
 .line-height-26{line-height: 26px}
+.line-height-30{line-height: 30px}
 /* 布局类 */
+.size100{width: 100px;height: 100px}
 .size80{width: 80px;height: 80px}
 .size60{width: 60px;height: 60px}
 .size40{width: 40px;height: 40px}

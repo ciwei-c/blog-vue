@@ -4,25 +4,15 @@ block content
   .mainbody
     .container.about
       .row
-        .col-md-8
+        .col-md-10.col-md-offset-1
           .panel.panel-default
             .panel-heading.heading-black
-              h3.panel-title 关于
+              h3.panel-title.font-size-20.about-title 关于本站
             .panel-body.indent-p
               div
-                h4 简介
-                p 前台：
-                p --boopstrap
-                p --jquery
-                p --vue.js
-                p --jade
-                p 后台：
-                p --node.js/express
-                p --mongodb/mongoose
-                p 其他：
-                p --moment.js
-                p --summernote.js
-                p --font-awesome等
+                hr
+                h4 网站简介
+                p.line-height-30 　　本站未使用相关建站模板，均由个人开发，尚有诸多不足之处。前台UI框架使用 bootstrap，模板引擎使用 jade，工具类库使用 jquery，并使用渐进式 MVVM 框架 vue.js，不过使用尚浅。数据库为 mongodb，使用 mongoose 操作数据库，服务器为阿里云服务器 ECS，Windows Server 2012 R2 数据中心版 64位中文版，nodejs 启动服务器，域名 www.81lion.com，购买自阿里万网，备案编号 闽ICP备17002918号-1。
               div
                 hr
                 h4 博客初衷
@@ -30,31 +20,22 @@ block content
                 p 记录自己的生活和学习
               div
                 hr
-                h4
-                pre just do it
-        .col-md-4#sidebar
-          .panel.panel-default
-            .panel-heading.heading-black
-              h3.panel-title 个人
-            .panel-body
-              .clearfix
-                .col-md-4.col-sm-4.col-xs-4
-                  img.inlineblock.radius10.img-thumbnail.img-responsive(src="public/image/c.png")
-                .col-md-8.col-sm-8.col-xs-8
-                  p 这家伙很懒，懒得想这里写什么。
-                  p ciwei_c@163.com
-              hr
-              ul.ul-col.ul-col-2
-                li
-                  a.a.fa.fa-weibo.fa-2x(href="https://weibo.com/" target="_blank")
-                li
-                  a.a.fa.fa-github.fa-2x(href="https://github.com/ciwei-c" target="_blank")
-          .panel.panel-default
-            .panel-heading.heading-black
-              h3.panel-title 文章
-            ul.list-group.articul(v-cloak)
-              li.list-group-item(v-if="listItems" v-for="item in listItems")
-                a(v-bind:href="'artic?'+item._id") {{item.title}}
-              li.padding-16(v-else) 没有发表文章
-            a.padding-10.inlineblock.indent5(href="artics") 查看更多
+                h4 联系方式
+                p ciwei_c@163.com
+                p
+                  img.size100.inlineblock.radius10.img-thumbnail.img-responsive.about-wexin(src="public/image/wexin.png")
+                p 不足之处，望不吝赐教！
+              div.clearfix
+                hr
+                h4 个人相关
+                p 本站的定位是一个博客，将主要记录本人的学习和工作。
+                p 前端是个坑，越学坑越深，本人在前端路上还是一个小学生，希望能够越走越远。
+                hr
+                .col-md-4.col-sm-4.person
+                  .panel.panel-transparent
+                    ul.ul-col.ul-col-2
+                      li
+                        a.qq.a.fa.fa-qq.fa-2x(v-bind:href="href" title="309491435" data-toggle="tooltip" @click="onQQClick")
+                      li
+                        a.a.fa.fa-github.fa-2x(href="https://github.com/ciwei-c" target="_blank")
   script(src="public/js/about.js")

@@ -1,5 +1,5 @@
 $(function(){
-	//说说
+	//闲言碎语
 	new Vue({
 		el:".mood-panel",
 		data:{
@@ -11,6 +11,15 @@ $(function(){
 				data.item.creatAt = moment(data.item.creatAt).format("YYYY-MM-DD HH:mm");
 				_this.item = data.item;
 			})
+		}
+	})
+	new Vue({
+		el:".tags-panel",
+		data:{
+			listItems:articType(),
+			colors:["#F44336","#FF5722","#efdf57","#8BC34A","#4CAF50","#00BCD4","#673AB7"]
+		},
+		created:function(){
 		}
 	})
 	new Vue({

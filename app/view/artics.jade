@@ -44,7 +44,8 @@ block content
             ul.list-group.articul-list.margin-top-16(v-cloak)
               .text-center(v-show="isShow")
                 img(src="public/image/loading.gif")
-              li.clearfix.padding-bottom-10.border-radius-5(v-if="listItems.length" v-for="(item,index) in listItems" v-bind:class="{'listbg':item.isOdd}")
+              li.li.border-radius-5.padding-10(v-if="noArtics") 当前分类下没有文章
+              li.clearfix.padding-bottom-10.border-radius-5(v-else-if="listItems.length" v-for="(item,index) in listItems" v-bind:class="{'listbg':item.isOdd}")
                 .padding-left-10.padding-right-10
                   a(v-bind:href="'artic?'+item._id") {{item.title}}
                   .right

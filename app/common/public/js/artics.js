@@ -57,6 +57,7 @@ $(function(){
 							if(Alist){
 								Alist.listItems = "";
 								Alist.isShow = true;
+								Alist.noArtics = false;
 							}
 							if(Plist){
 								Plist.listItems = "";
@@ -65,6 +66,10 @@ $(function(){
 						success:function(data){
 							setTimeout(function() {
 								Alist.isShow = false;
+								if(!data.items.length){
+									Alist.noArtics = true;
+									return;
+								}
 								data.items.forEach(function(item,index){
 									item.creatAt = moment(item.creatAt).format("YYYY-MM-DD HH:mm");
 									item.isOdd = (index%2==0?false:true);
@@ -204,7 +209,8 @@ $(function(){
 		el:".articul-list",
 		data:{
 			listItems:"",
-			isShow:false
+			isShow:false,
+			noArtics:false
 		},
 		created:function(){
 			var _this = this;
