@@ -51,5 +51,5 @@ block content
             .panel-body.tags-panel(v-cloak)
               ul.ul
                 li.margin-bottom-10(v-if="listItems.length" v-for="(item,index) in listItems")
-                  a.inlineblock.padding-5(v-bind:href="'artics?type='+index" v-bind:style="{background:colors[index]}") {{item}}
+                  a.inlineblock.padding-5(v-bind:href="'artics?type='+index" v-bind:style="{background:colors[index]}") {{item}} ({{count[index]}})
   script(src="public/js/index.js")

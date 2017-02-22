@@ -17,9 +17,26 @@ $(function(){
 		el:".tags-panel",
 		data:{
 			listItems:articType(),
+			count:[],
 			colors:["#F44336","#FF5722","#efdf57","#8BC34A","#4CAF50","#00BCD4","#673AB7"]
 		},
 		created:function(){
+			var _this = this;
+			$.get("artic/get_type_count",{},function(data){
+				if(data.ok == 1){
+					_this.listItems.forEach(function(item,index){
+						if(data.item){
+							if(index == 0 && data.item.all){
+								_this.count.push(data.item.all);
+							}else if(data.item["tp"+index]){
+								_this.count.push(data.item["tp"+index]);
+							}else{
+								_this.count.push(0);
+							}
+						}
+					})
+				}
+			});
 		}
 	})
 	new Vue({
