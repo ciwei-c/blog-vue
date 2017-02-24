@@ -37,7 +37,21 @@
 .intro{margin-top: -20px}
 .index-panel{border-left: none;}
 .index-panel .panel-heading{border-left:1px solid #e5e5e5;}
-.tags-panel a{font-family: "微软雅黑";color: #000;padding: 3px 10px;width: 60%;text-align: center;border-radius: 5px}
+.tags-panel a{
+	width: 60%;
+	padding: 3px 10px;
+	border-radius: 5px;
+	text-align: center;
+	text-decoration: none;
+	font-family: "微软雅黑";
+	color: #000;
+	transition:box-shadow 0.3s,transform 0.1s;
+}
+.tags-panel a:hover{
+	box-shadow: 0 0 20px 5px;
+	transform-origin:50% 50%;
+	transform: scale(1.15,1.1);
+}
 .articul-index li{
 	box-shadow:0 0 0 !important;
 	background-color:rgba(0,0,0,0);
@@ -48,7 +62,7 @@
 	transform-origin:0 0;
 	transform: scale(1.02,1);
 }
-@keyframes shadow {
+/*@keyframes shadow {
 	from{
 		transform: scale(1);
 	}
@@ -64,7 +78,7 @@
 	to{
 		box-shadow:15px 15px 15px !important;
 	}
-}
+}*/
 .artic-item{max-height: 100px;overflow: hidden;}
 ._active{background-color: #f5f5f5;}
 .banner{background: url(../image/banner-bg.jpg) center center no-repeat;background-size: 100%}
