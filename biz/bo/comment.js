@@ -35,13 +35,25 @@ commentSchema.statics.comment = function(callback,params){
 		content:params.content,
 		creatAt:Date.now()
 	})
-
+	var _this = this;
 	_comment.save(function(err,data){
 		if(err){
 			callback(err);
 			return;
 		}
 		callback(null);
+	}).then(function(){
+		_this.find({commentArtic:params.commentArtic},function(err,comments){
+			require("./artic").model.findByIdAndUpdate(params.commentArtic,{$set:{
+				commentCount:comments.length
+			}},function(err){
+				if(err){
+					console.log(err);
+					callback(err);
+					return;
+				}
+			})
+		})
 	})
 };
 
@@ -86,7 +98,11 @@ commentSchema.statics.reply = function(callback,params){
 };
 
 commentSchema.statics.get_comment_content = function(callback,params){
-	var skipNum = (Number(params.page)-1)*10;
+	if(params.page){
+		var skipNum = (Number(params.page)-1)*10;
+	}else{
+		skipNum = 0;
+	}
 	this.find({commentArtic:params.commentArtic})
 	.skip(skipNum)
 	.limit(10)

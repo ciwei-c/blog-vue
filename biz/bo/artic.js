@@ -1,13 +1,15 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
+var ObjectId = Schema.Types.ObjectId;
 var modelName = "artic";
 
 var articSchema = new Schema({
 	content:String,
 	title:String,
 	type:String,
+	commentCount:{type:Number,default:0},
 	pv:{type:Number,default:0},
-	author:{type:String,default:"ciwei_c"},
+	//author:{type:String,default:"ciwei_c"},
 	creatAt:{type:Date,default:Date.now()}
 })
 
@@ -31,7 +33,6 @@ articSchema.statics.publish_artic = function(callback,params){
 		creatAt:Date.now()
 	})
 	_artic.save(function(err,res){
-		var data = {};
 		if(err){
 			console.log(err)
 			callback(err);
@@ -58,7 +59,6 @@ articSchema.statics.update_artic = function(callback,params){
 		title:params.artic_title,
 		type:params.artic_type
 	}},function(err){
-		var data = {};
 		if(err){
 			console.log(err)
 			callback(err);
@@ -75,48 +75,49 @@ articSchema.statics.load_by_id = function(callback,params){
 			console.log(err);
 			callback(err);
 		}
-	})
-	this.findOne({_id:_id},function(err,artic){
-		if(err){
-			console.log(err);
-			callback(err);
-			return;
-		}
-		if(params.prevnext){
-			_this.find({},function(err,artics){
-				var prevArtic = {};
-				var nextArtic = {};
-				var prevNextArtic = {};
-				var nowIndex = "";
-				for(var i = 0;i < artics.length ; i ++){
-					if(artics[i]._id == _id){
-						nowIndex = i;
+		_this.findOne({_id:_id},function(err,artic){
+			if(err){
+				console.log(err);
+				callback(err);
+				return;
+			}
+			if(params.prevnext){
+				_this.find({},function(err,artics){
+					var prevArtic = {};
+					var nextArtic = {};
+					var prevNextArtic = {};
+					var nowIndex = "";
+					for(var i = 0;i < artics.length ; i ++){
+						if(artics[i]._id == _id){
+							nowIndex = i;
+						}
+					}
+				if(artics.length>1){
+					if(nowIndex == 0){
+						prevArtic._id = artics[nowIndex+1]._id;
+						prevArtic.title = artics[nowIndex+1].title;
+					}else if(nowIndex == artics.length-1){
+						nextArtic._id = artics[nowIndex-1]._id;
+						nextArtic.title = artics[nowIndex-1].title;
+					}else{
+						nextArtic._id = artics[nowIndex-1]._id;
+						prevArtic._id = artics[nowIndex+1]._id;
+						nextArtic.title = artics[nowIndex-1].title;
+						prevArtic.title = artics[nowIndex+1].title;
 					}
 				}
-			if(artics.length>1){
-				if(nowIndex == 0){
-					prevArtic._id = artics[nowIndex+1]._id;
-					prevArtic.title = artics[nowIndex+1].title;
-				}else if(nowIndex == artics.length-1){
-					nextArtic._id = artics[nowIndex-1]._id;
-					nextArtic.title = artics[nowIndex-1].title;
-				}else{
-					nextArtic._id = artics[nowIndex-1]._id;
-					prevArtic._id = artics[nowIndex+1]._id;
-					nextArtic.title = artics[nowIndex-1].title;
-					prevArtic.title = artics[nowIndex+1].title;
-				}
+					var data = {};
+					data.artic = artic;
+					data.prevArtic = prevArtic;
+					data.nextArtic = nextArtic;
+					callback(null,data)
+				})
+			}else{
+				callback(null,artic);
 			}
-				var data = {};
-				data.artic = artic;
-				data.prevArtic = prevArtic;
-				data.nextArtic = nextArtic;
-				callback(null,data)
-			})
-		}else{
-			callback(null,artic);
-		}
+		})
 	})
+	
 };
 articSchema.statics.get_page_count = function(callback,params){
 	var result = (params.artic_type?this.find({type:params.artic_type}):this.find({}));
@@ -159,7 +160,8 @@ articSchema.statics.load_artics = function(callback,params){
 	}
 	//加载分类
 	result = (params.limit?result.limit(Number(params.limit)):result);
-	result.sort({creatAt:-1}).exec(function(err,artics){
+	result.sort({creatAt:-1})
+	.exec(function(err,artics){
 		if(err){
 			console.log(err);
 			callback(err);

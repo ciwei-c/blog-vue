@@ -49,7 +49,7 @@ block content
                 .padding-left-10.padding-right-10
                   a(v-bind:href="'artic?'+item._id") {{item.title}}
                   .right
-                    span.fa.fa-user-o.margin-right-16  {{item.author}}
+                    span.margin-right-16  ({{item.commentCount}}/{{item.pv}})
                     span.fa.fa-clock-o  {{item.creatAt}}
           .text-center
             ul.pagination.margin-center.artics-page-ul(v-cloak)
