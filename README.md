@@ -1,5 +1,5 @@
 # blog-vue
-   使用vue.js
+    vue.js
    	   jquery
    	   jade
        bootstrap
