@@ -4,5 +4,4 @@
     jade
     bootstrap
     mongodb
-    node
-    express
+    node/express
